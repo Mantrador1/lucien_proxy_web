@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+﻿from flask import Flask, request, jsonify
 import os
 import requests
 
@@ -10,7 +10,7 @@ def ask():
     data = request.get_json()
     prompt = data.get("prompt", "")
     try:
-        res = requests.post(LOCAL_LUCIEN_URL, json={"prompt": prompt})
+        res = requests.post(LOCAL_LUCIEN_URL, headers={"Authorization": f"Bearer {os.environ.get(\"OPENROUTER_API_KEY\", \"\")}"}, json={"prompt": prompt})
         res.raise_for_status()
         return jsonify(res.json())
     except Exception as e:
